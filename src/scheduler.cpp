@@ -13,11 +13,44 @@ void Scheduler::addProcess(const Process& p) {
 }
 
 void Scheduler::run() {
+    // Initialize mutexes and cond vars for each process
+    for (auto& p : processes) {
+        pthread_mutex_init(&p.proc_mutex, nullptr);
+        pthread_cond_init(&p.proc_cond, nullptr);
+        p.is_running = false;
+        p.is_completed = false;
+        pthread_create(&p.thread, nullptr, Scheduler::processThreadFunc, &p);
+    }
     if (type == ROUND_ROBIN) {
         roundRobin();
     } else {
         priorityPreemptive();
     }
+    // Wait for all threads to finish
+    for (auto& p : processes) {
+        pthread_join(p.thread, nullptr);
+        pthread_mutex_destroy(&p.proc_mutex);
+        pthread_cond_destroy(&p.proc_cond);
+    }
+}
+// Thread function for process simulation
+void* Scheduler::processThreadFunc(void* arg) {
+    Process* p = static_cast<Process*>(arg);
+    while (!p->is_completed) {
+        pthread_mutex_lock(&p->proc_mutex);
+        while (!p->is_running && !p->is_completed) {
+            pthread_cond_wait(&p->proc_cond, &p->proc_mutex);
+        }
+        if (p->is_completed) {
+            pthread_mutex_unlock(&p->proc_mutex);
+            break;
+        }
+        // Simulate execution (sleep for 1 unit)
+        usleep(100000); // 0.1 sec per time unit for visualization
+        p->is_running = false;
+        pthread_mutex_unlock(&p->proc_mutex);
+    }
+    return nullptr;
 }
 
 void Scheduler::printGanttChart() {
@@ -58,12 +91,25 @@ void Scheduler::roundRobin() {
             Process* p = *it;
             int exec_time = std::min(quantum, p->remaining_time);
             gantt_chart.push_back("P" + std::to_string(p->pid));
-            p->remaining_time -= exec_time;
-            time += exec_time;
+            // Signal process thread to run for exec_time units
+            for (int i = 0; i < exec_time; ++i) {
+                pthread_mutex_lock(&p->proc_mutex);
+                p->is_running = true;
+                pthread_cond_signal(&p->proc_cond);
+                pthread_mutex_unlock(&p->proc_mutex);
+                // Wait for simulated execution
+                usleep(100000); // 0.1 sec per time unit
+                p->remaining_time--;
+                time++;
+            }
             if (p->remaining_time == 0) {
                 p->finish_time = time;
                 p->turnaround_time = p->finish_time - p->arrival_time;
                 p->wait_time = p->turnaround_time - p->burst_time;
+                p->is_completed = true;
+                pthread_mutex_lock(&p->proc_mutex);
+                pthread_cond_signal(&p->proc_cond);
+                pthread_mutex_unlock(&p->proc_mutex);
                 completed++;
                 it = ready.erase(it);
             } else {
@@ -91,12 +137,22 @@ void Scheduler::priorityPreemptive() {
         std::sort(ready.begin(), ready.end(), cmp);
         Process* p = ready.front();
         gantt_chart.push_back("P" + std::to_string(p->pid));
+        // Signal process thread to run for 1 unit (preemptive)
+        pthread_mutex_lock(&p->proc_mutex);
+        p->is_running = true;
+        pthread_cond_signal(&p->proc_cond);
+        pthread_mutex_unlock(&p->proc_mutex);
+        usleep(100000); // 0.1 sec per time unit
         p->remaining_time--;
         time++;
         if (p->remaining_time == 0) {
             p->finish_time = time;
             p->turnaround_time = p->finish_time - p->arrival_time;
             p->wait_time = p->turnaround_time - p->burst_time;
+            p->is_completed = true;
+            pthread_mutex_lock(&p->proc_mutex);
+            pthread_cond_signal(&p->proc_cond);
+            pthread_mutex_unlock(&p->proc_mutex);
             completed++;
         }
     }

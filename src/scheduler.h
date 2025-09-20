@@ -16,6 +16,11 @@ struct Process {
     int finish_time;
     int wait_time;
     int turnaround_time;
+    pthread_t thread;
+    pthread_mutex_t proc_mutex;
+    pthread_cond_t proc_cond;
+    bool is_running = false;
+    bool is_completed = false;
 };
 
 enum SchedulingType {
@@ -38,6 +43,7 @@ private:
     std::vector<std::string> gantt_chart;
     void roundRobin();
     void priorityPreemptive();
+    static void* processThreadFunc(void* arg);
 };
 
 #endif // SCHEDULER_H
