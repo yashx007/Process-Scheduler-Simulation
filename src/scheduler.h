@@ -1,4 +1,4 @@
-// Process structure and scheduler logic declarations
+
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
@@ -46,4 +46,4 @@ private:
     static void* processThreadFunc(void* arg);
 };
 
-#endif // SCHEDULER_H
+#endif 

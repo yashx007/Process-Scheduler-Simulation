@@ -1,4 +1,4 @@
-// Main entry point for the process scheduler simulation
+
 #include "scheduler.h"
 #include <iostream>
 

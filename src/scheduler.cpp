@@ -1,4 +1,4 @@
-// Scheduler implementation
+
 #include "scheduler.h"
 #include <iostream>
 #include <algorithm>
@@ -13,7 +13,7 @@ void Scheduler::addProcess(const Process& p) {
 }
 
 void Scheduler::run() {
-    // Initialize mutexes and cond vars for each process
+    
     for (auto& p : processes) {
         pthread_mutex_init(&p.proc_mutex, nullptr);
         pthread_cond_init(&p.proc_cond, nullptr);
@@ -46,7 +46,7 @@ void* Scheduler::processThreadFunc(void* arg) {
             break;
         }
         // Simulate execution (sleep for 1 unit)
-        usleep(100000); // 0.1 sec per time unit for visualization
+        usleep(100000); 
         p->is_running = false;
         pthread_mutex_unlock(&p->proc_mutex);
     }
@@ -142,7 +142,7 @@ void Scheduler::priorityPreemptive() {
         p->is_running = true;
         pthread_cond_signal(&p->proc_cond);
         pthread_mutex_unlock(&p->proc_mutex);
-        usleep(100000); // 0.1 sec per time unit
+        usleep(100000); 
         p->remaining_time--;
         time++;
         if (p->remaining_time == 0) {
