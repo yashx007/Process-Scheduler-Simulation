@@ -1,9 +1,6 @@
 
 # Process Scheduler Simulation
 
-![Output Screenshot](output.png)
-*Replace `output.png` with your actual output image.*
-
 ## Overview
 This project simulates CPU scheduling algorithms—Round Robin and Priority Scheduling (with preemption)—using C++ and POSIX threads. It is designed to reinforce operating system concepts by simulating concurrent process execution and kernel-level scheduling.
 
@@ -47,7 +44,6 @@ Follow the prompts to enter process details and select the scheduling algorithm.
 - `src/main.cpp` — Main entry point
 - `src/scheduler.h` — Scheduler and process definitions
 - `src/scheduler.cpp` — Scheduler implementation
-- `.github/copilot-instructions.md` — Copilot instructions
 - `README.md` — Project documentation
 
 ## Contributing
