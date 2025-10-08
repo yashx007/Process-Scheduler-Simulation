@@ -19,10 +19,12 @@ int main() {
         p.remaining_time = p.burst_time;
         plist.push_back(p);
     }
-    std::cout << "Select scheduling algorithm (0: Round Robin, 1: Priority Preemptive): ";
+    std::cout << "Select scheduling algorithm:\n";
+    std::cout << "0: Round Robin\n1: FCFS\n2: SJF\n3: SRTF\n4: Multi-level Queue\n5: Multi-level Feedback\n6: Priority Preemptive\n";
+    std::cout << "Enter choice: ";
     std::cin >> type;
-    if (type == 0) {
-        std::cout << "Enter time quantum: ";
+    if (type == 0 || type == 4 || type == 5) {
+        std::cout << "Enter time quantum (suggest 1): ";
         std::cin >> quantum;
     }
     Scheduler scheduler(static_cast<SchedulingType>(type), quantum);

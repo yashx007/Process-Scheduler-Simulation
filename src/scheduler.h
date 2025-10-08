@@ -25,6 +25,11 @@ struct Process {
 
 enum SchedulingType {
     ROUND_ROBIN,
+    FCFS,
+    SJF,
+    SRTF,
+    MULTI_LEVEL_QUEUE,
+    MULTI_LEVEL_FEEDBACK,
     PRIORITY_PREEMPTIVE
 };
 
@@ -42,6 +47,11 @@ private:
     pthread_mutex_t mutex;
     std::vector<std::string> gantt_chart;
     void roundRobin();
+    void fcfs();
+    void sjf();
+    void srtf();
+    void multiLevelQueue();
+    void multiLevelFeedback();
     void priorityPreemptive();
     static void* processThreadFunc(void* arg);
 };
