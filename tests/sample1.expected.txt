@@ -1,0 +1,7 @@
+Gantt Chart:
+P1 P2 P3
+
+Process	Wait Time	Turnaround Time
+1	0	5
+2	? 	? 
+3	? 	? 
