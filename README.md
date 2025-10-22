@@ -163,10 +163,3 @@ If you want to extend the simulator:
 - Add a CLI mode to run headless tests and compare computed stats to expected values.
 
 Please open a pull request against `main` (current work is on branch `feat/new-schedulers`). I can help add test fixtures and CI if you want.
-
-## License
-
-MIT License — see `LICENSE` if present.
-
----
-If you want, I can also add a `tests/` folder with sample inputs and an automated test driver, or add command-line flags to the program to support non-interactive runs. Tell me which you'd like next.
