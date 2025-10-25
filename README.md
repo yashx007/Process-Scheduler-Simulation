@@ -1,47 +1,6 @@
 
 # Process Scheduler Simulation
 
-## Overview
-This project simulates CPU scheduling algorithms—Round Robin and Priority Scheduling (with preemption)—using C++ and POSIX threads. It is designed to reinforce operating system concepts by simulating concurrent process execution and kernel-level scheduling.
-
-## Features
-- Simulates concurrent process execution using threads
-- Implements Round Robin and Priority Scheduling (preemptive)
-- Preemption logic for realistic scheduling
-- Gantt chart visualization (text-based)
-- Calculates wait and turnaround times for each process
-- Systems-level programming with synchronization
-
-## Output Example
-Below is a placeholder for the output screenshot. After running the program, you can add a screenshot of the Gantt chart and statistics here:
-
-![Output Screenshot](output.png)
-
-## Getting Started
-
-### Prerequisites
-- C++11 or later
-- POSIX threads (pthreads)
-- GCC (MinGW-w64 for Windows/MSYS2, or Linux/macOS)
-
-### Build Instructions
-Open your terminal in the project directory and run:
-
-```sh
-g++ -std=c++11 -pthread src/main.cpp src/scheduler.cpp -o a.exe
-```
-
-### Run Instructions
-Execute the compiled program:
-
-```sh
-./scheduler.exe
-```
-
-Follow the prompts to enter process details and select the scheduling algorithm.
-
-# Process Scheduler Simulation
-
 This project simulates CPU scheduling algorithms using C++ and POSIX threads. It was built as an educational simulator to demonstrate how different scheduling policies behave (Gantt charts, wait/turnaround calculations, and simple process threads).
 
 The branch `feat/new-schedulers` adds multiple algorithms (FCFS, SJF, SRTF, Multi-level Queue, Multi-level Feedback) on top of the original Round Robin and Priority (preemptive) schedulers.
