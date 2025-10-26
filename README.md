@@ -111,14 +111,3 @@ Create a small test with the following sample (use as stdin or a test harness):
 2 2 2
 ```
 
-(Note: the interactive front-end of this project currently reads fields in separate prompts — a test harness can be added to support file-based input.)
-
-## Contributing
-
-If you want to extend the simulator:
-
-- Add more scheduling policies in `Scheduler` and register them in the menu.
-- Improve multi-level queue classification rules or make them configurable.
-- Add a CLI mode to run headless tests and compare computed stats to expected values.
-
-Please open a pull request against `main` (current work is on branch `feat/new-schedulers`). I can help add test fixtures and CI if you want.
