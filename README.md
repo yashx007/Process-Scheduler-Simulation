@@ -100,14 +100,3 @@ Average Turnaround Time: ...
 
 - The project is primarily interactive. If you need non-interactive testing, consider redirecting input from a file or adding a small wrapper that reads input from `input.txt` and writes output to `output.txt`.
 
-## Examples and Quick Tests
-
-Create a small test with the following sample (use as stdin or a test harness):
-
-```
-3
-0 5 1
-1 3 6
-2 2 2
-```
-
